@@ -23,8 +23,7 @@ btc_url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currenci
 btc_response = requests.get(btc_url)
 btc_data = btc_response.json()
 
-print("BTC status code:", btc_response.status_code)
-print("BTC raw text:", btc_response.text)  # вывод в лог GitHub Actions
+print("BTC raw response:", btc_data)  # вывод в лог GitHub Actions
 
 btc_rub = btc_data.get('bitcoin', {}).get('rub')
 if btc_rub is None:
@@ -37,7 +36,7 @@ message = f"📅 Курс ЦБ РФ на {cb_date}\n\n"
 message += f"💵 USD: {usd:.2f} ₽\n"
 message += f"💶 EUR: {eur:.2f} ₽\n"
 message += f"🇨🇳 CNY: {cny:.2f} ₽\n\n"
-message += btc_line
+message += f"\n\n{btc_line}"
 
 # === Отправка в Telegram ===
 response = requests.post(
