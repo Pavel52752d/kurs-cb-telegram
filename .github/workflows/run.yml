@@ -1,0 +1,23 @@
+name: Run kurs_cb.py every hour
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # запуск каждый час по UTC
+  workflow_dispatch:     # позволяет запускать вручную
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Клонировать репозиторий
+        uses: actions/checkout@v3
+
+      - name: Установить зависимости
+        run: pip install requests
+
+      - name: Запустить скрипт
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: python kurs_cb.py
